@@ -13,24 +13,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+      - run: npm install -g pnpm
       - run: pnpm install
-      - run: pnpm run build
+      - run: pnpm run build --filter=@nexui/storybook-docs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/docs/storybook-static
       - uses: actions/deploy-pages@v4
         id: deployment
-```
-
-Click **Commit changes** → **Commit directly to main**.
-
-Then wait 3-4 minutes and go to:
-```
-https://frontend-kavindi.github.io/nexui
