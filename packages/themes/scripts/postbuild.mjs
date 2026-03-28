@@ -160,6 +160,10 @@ parts.push(`@keyframes nexui-toast-progress {`);
 parts.push(`  from { transform: scaleX(1); }`);
 parts.push(`  to { transform: scaleX(0); }`);
 parts.push(`}`);
+parts.push(`@keyframes nexui-skeleton-pulse {`);
+parts.push(`  0%, 100% { opacity: var(--nexui-opacity-subdued); }`);
+parts.push(`  50% { opacity: var(--nexui-opacity-full); }`);
+parts.push(`}`);
 
 const css = `${parts.join('\n')}\n`;
 stripPhysicalDirections(css);

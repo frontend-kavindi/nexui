@@ -291,7 +291,7 @@ export type NexuiToastProviderProps = { children: ReactNode };
 export const NexuiToastProvider = forwardRef<HTMLDivElement, NexuiToastProviderProps>(
   function NexuiToastProvider({ children }, ref) {
     const [toasts, dispatch] = useReducer(reducer, []);
-    const timers = useRef(new Map<string, ReturnType<typeof window.setTimeout>>());
+    const timers = useRef(new Map<string, number>());
 
     const dismiss = useCallback((id: string) => {
       const handle = timers.current.get(id);
@@ -313,7 +313,9 @@ export const NexuiToastProvider = forwardRef<HTMLDivElement, NexuiToastProviderP
         };
         dispatch({ type: 'push', payload: record });
         const preset = record.duration ?? 'normal';
-        const t = window.setTimeout(() => { dismiss(id); }, toastDismissMs(preset));
+        const t = window.setTimeout(() => {
+          dismiss(id);
+        }, toastDismissMs(preset));
         timers.current.set(id, t);
         return id;
       },
