@@ -1,0 +1,10 @@
+node_modules
+dist
+.turbo
+coverage
+storybook-static
+packages/themes/src/generated
+*.log
+.DS_Store
+.env
+.env.*

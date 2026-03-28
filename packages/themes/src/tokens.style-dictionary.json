@@ -1,0 +1,60 @@
+{
+  "color": {
+    "foreground": {
+      "default": {
+        "value": "#0a0a0a",
+        "type": "color"
+      },
+      "muted": {
+        "value": "#525252",
+        "type": "color"
+      }
+    },
+    "background": {
+      "canvas": {
+        "value": "#ffffff",
+        "type": "color"
+      },
+      "subtle": {
+        "value": "#f5f5f5",
+        "type": "color"
+      }
+    },
+    "border": {
+      "default": {
+        "value": "#e5e5e5",
+        "type": "color"
+      }
+    },
+    "brand": {
+      "primary": {
+        "value": "#2563eb",
+        "type": "color"
+      },
+      "onPrimary": {
+        "value": "#ffffff",
+        "type": "color"
+      }
+    }
+  },
+  "radius": {
+    "sm": {
+      "value": "4px",
+      "type": "borderRadius"
+    },
+    "md": {
+      "value": "8px",
+      "type": "borderRadius"
+    }
+  },
+  "space": {
+    "2": {
+      "value": "8px",
+      "type": "spacing"
+    },
+    "4": {
+      "value": "16px",
+      "type": "spacing"
+    }
+  }
+}
