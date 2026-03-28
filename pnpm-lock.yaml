@@ -251,6 +251,9 @@ importers:
       '@nexui/utils':
         specifier: workspace:*
         version: link:../utils
+      focus-trap:
+        specifier: ^7.6.4
+        version: 7.8.0
     devDependencies:
       '@types/node':
         specifier: ^22.13.5

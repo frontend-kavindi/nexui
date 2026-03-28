@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@nexui/themes": "workspace:*",
-    "@nexui/utils": "workspace:*"
+    "@nexui/utils": "workspace:*",
+    "focus-trap": "^7.6.4"
   },
   "peerDependencies": {
     "vue": "^3.4.0"
