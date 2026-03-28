@@ -14,6 +14,7 @@ export default defineConfig({
     '@nexui/utils',
     '@nexui/themes',
     'focus-trap-react',
+    '@tanstack/react-virtual',
   ],
   esbuildOptions(options) {
     options.jsx = 'automatic';
