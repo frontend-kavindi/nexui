@@ -1,0 +1,144 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+env:
+  NODE_VERSION: '20.x'
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.15.4
+
+      - name: Get pnpm store directory
+        id: pnpm-store
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Bundle size check
+        run: pnpm size-check
+
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
+          commit: 'chore: release packages'
+          title: 'chore: release packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ env.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
+
+      - name: Deploy Storybook to GitHub Pages
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          cd apps/docs
+          pnpm build-storybook --output-dir ../../storybook-static
+          
+      - name: Setup GitHub Pages
+        if: steps.changesets.outputs.published == 'true'
+        uses: actions/configure-pages@v4
+
+      - name: Upload to GitHub Pages
+        if: steps.changesets.outputs.published == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./storybook-static
+
+      - name: Deploy to GitHub Pages
+        if: steps.changesets.outputs.published == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Create GitHub Release
+        if: steps.changesets.outputs.published == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { execSync } = require('child_process');
+            
+            // Get the latest tag
+            const tag = execSync('git describe --tags --abbrev=0').toString().trim();
+            
+            // Get the changelog from changesets
+            let changelog = '';
+            try {
+              changelog = execSync('pnpm changeset status --verbose').toString();
+            } catch (error) {
+              changelog = 'See package.json for version changes';
+            }
+            
+            // Create release
+            await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tag,
+              name: tag,
+              body: changelog,
+              draft: false,
+              prerelease: false,
+            });
+
+  # GitHub Pages deployment job
+  deploy:
+    name: Deploy Storybook
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,84 @@
+name: Visual Regression
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+env:
+  NODE_VERSION: '20.x'
+  CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+jobs:
+  chromatic:
+    name: Chromatic Visual Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.15.4
+
+      - name: Get pnpm store directory
+        id: pnpm-store
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Storybook
+        run: |
+          cd apps/docs
+          pnpm build-storybook --output-dir ../../storybook-static
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v11
+        with:
+          projectToken: ${{ env.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          workingDir: apps/docs
+          exitZeroOnChanges: true
+          onlyChanged: true
+
+      - name: Comment PR with Chromatic results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Find existing Chromatic comment
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            
+            const existingComment = comments.find(comment => 
+              comment.body.includes('🎨 Chromatic') && 
+              comment.user.type === 'Bot'
+            );
+            
+            // This will be handled by Chromatic's built-in PR commenting
+            console.log('Chromatic will automatically comment on the PR with visual test results');

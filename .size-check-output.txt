@@ -1,0 +1,9 @@
+  
+  [1mButton[22m
+  Size limit: [32m[1m30 kB[22m[39m
+  Size:       [32m[1m29.22 kB[22m[39m [90mwith all dependencies, minified and brotlied[39m
+  
+  [1mDataGrid[22m
+  Size limit: [32m[1m30 kB[22m[39m
+  Size:       [32m[1m29.2 kB[22m[39m [90mwith all dependencies, minified and brotlied[39m
+  

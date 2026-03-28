@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Button",
+    "path": "test-button-size.js",
+    "limit": "30 kB"
+  },
+  {
+    "name": "DataGrid",
+    "path": "test-datagrid-size.js",
+    "limit": "30 kB"
+  }
+]

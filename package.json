@@ -10,14 +10,20 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "format": "prettier --write \"**/*.{ts,tsx,vue,mjs,cjs,json,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,vue,mjs,cjs,json,md}\"",
+    "size-check": "node scripts/size-check.js",
+    "release": "changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.10",
     "@eslint/js": "^9.21.0",
+    "@size-limit/esbuild": "^11.0.0",
+    "@size-limit/preset-small-lib": "^11.0.0",
     "eslint": "^9.21.0",
     "eslint-plugin-vue": "^9.32.0",
     "globals": "^15.15.0",
     "prettier": "^3.5.0",
+    "size-limit": "^11.0.0",
     "turbo": "^2.4.4",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.25.0",
