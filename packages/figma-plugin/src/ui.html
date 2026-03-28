@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexUI Sync</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      padding: 16px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .container {
+      max-width: 100%;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #2d3748;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #4a5568;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="url"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="url"]:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #4a5568;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #cbd5e0;
+    }
+
+    .btn-danger {
+      background: #f56565;
+      color: white;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: #e53e3e;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .status {
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .status-success {
+      background: #f0fff4;
+      color: #22543d;
+      border: 1px solid #9ae6b4;
+    }
+
+    .status-error {
+      background: #fff5f5;
+      color: #742a2a;
+      border: 1px solid #feb2b2;
+    }
+
+    .status-info {
+      background: #ebf8ff;
+      color: #2c5282;
+      border: 1px solid #90cdf4;
+    }
+
+    .diff-container {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    .diff-item {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 13px;
+    }
+
+    .diff-item:last-child {
+      border-bottom: none;
+    }
+
+    .diff-added {
+      background: #f0fff4;
+      color: #22543d;
+    }
+
+    .diff-modified {
+      background: #fffbf0;
+      color: #744210;
+    }
+
+    .diff-removed {
+      background: #fff5f5;
+      color: #742a2a;
+    }
+
+    .diff-type {
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11px;
+      margin-right: 8px;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .diff-name {
+      font-weight: 500;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .last-sync {
+      font-size: 12px;
+      color: #718096;
+      margin-top: 8px;
+    }
+
+    .help-text {
+      font-size: 12px;
+      color: #718096;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>NexUI Sync</h1>
+      <p>Design Token Synchronization</p>
+    </div>
+
+    <div class="content">
+      <!-- Status Messages -->
+      <div id="status" class="status hidden"></div>
+
+      <!-- Configuration Section -->
+      <div class="section">
+        <div class="section-title">Configuration</div>
+        
+        <div class="form-group">
+          <label for="github-token">GitHub Personal Access Token</label>
+          <input type="password" id="github-token" placeholder="ghp_...">
+          <div class="help-text">Required: Token with repo access to fetch tokens.json</div>
+        </div>
+
+        <div class="form-group">
+          <label for="tokens-url">Tokens JSON URL</label>
+          <input type="url" id="tokens-url" placeholder="https://raw.githubusercontent.com/...">
+          <div class="help-text">Direct URL to tokens.json file in your repository</div>
+        </div>
+
+        <button id="save-config" class="btn btn-secondary">Save Configuration</button>
+        <button id="fetch-tokens" class="btn btn-primary" disabled>Fetch Tokens</button>
+      </div>
+
+      <!-- Token Preview Section -->
+      <div id="token-preview" class="section hidden">
+        <div class="section-title">Token Preview</div>
+        <div id="token-summary"></div>
+      </div>
+
+      <!-- Diff Section -->
+      <div id="diff-section" class="section hidden">
+        <div class="section-title">Changes Preview</div>
+        <div class="help-text">Review the changes before applying them to your Figma variables</div>
+        <div id="diff-container" class="diff-container"></div>
+        <button id="apply-changes" class="btn btn-primary">Apply Changes</button>
+        <button id="cancel-changes" class="btn btn-secondary">Cancel</button>
+      </div>
+
+      <!-- Last Sync Info -->
+      <div id="last-sync" class="last-sync hidden"></div>
+    </div>
+  </div>
+
+  <script>
+    // Plugin state
+    let pluginState = {};
+    let currentTokens = null;
+    let currentDiff = [];
+
+    // DOM elements
+    const elements = {
+      status: document.getElementById('status'),
+      githubToken: document.getElementById('github-token'),
+      tokensUrl: document.getElementById('tokens-url'),
+      saveConfig: document.getElementById('save-config'),
+      fetchTokens: document.getElementById('fetch-tokens'),
+      tokenPreview: document.getElementById('token-preview'),
+      tokenSummary: document.getElementById('token-summary'),
+      diffSection: document.getElementById('diff-section'),
+      diffContainer: document.getElementById('diff-container'),
+      applyChanges: document.getElementById('apply-changes'),
+      cancelChanges: document.getElementById('cancel-changes'),
+      lastSync: document.getElementById('last-sync'),
+    };
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      setupEventListeners();
+      // Request state from plugin code
+      parent.postMessage({ pluginMessage: { type: 'GET_STATE' } }, '*');
+    });
+
+    // Setup event listeners
+    function setupEventListeners() {
+      elements.saveConfig.addEventListener('click', saveConfiguration);
+      elements.fetchTokens.addEventListener('click', fetchTokens);
+      elements.applyChanges.addEventListener('click', applyChanges);
+      elements.cancelChanges.addEventListener('click', cancelChanges);
+      
+      // Enable/disable fetch button based on inputs
+      elements.githubToken.addEventListener('input', validateForm);
+      elements.tokensUrl.addEventListener('input', validateForm);
+    }
+
+    // Handle messages from plugin code
+    window.onmessage = (event) => {
+      const { type, payload } = event.data.pluginMessage;
+      
+      switch (type) {
+        case 'STATE_LOADED':
+          handleStateLoaded(payload);
+          break;
+        case 'TOKEN_SAVED':
+          handleTokenSaved(payload);
+          break;
+        case 'TOKENS_FETCHED':
+          handleTokensFetched(payload);
+          break;
+        case 'DIFF_CALCULATED':
+          handleDiffCalculated(payload);
+          break;
+        case 'SYNC_COMPLETE':
+          handleSyncComplete(payload);
+          break;
+        case 'SYNC_ERROR':
+          handleSyncError(payload);
+          break;
+        case 'ERROR':
+          handleError(payload);
+          break;
+      }
+    };
+
+    // Handle state loaded from plugin
+    function handleStateLoaded(state) {
+      pluginState = state;
+      
+      if (state.githubToken) {
+        elements.githubToken.value = state.githubToken;
+      }
+      
+      if (state.tokensUrl) {
+        elements.tokensUrl.value = state.tokensUrl;
+      }
+      
+      if (state.lastSync) {
+        elements.lastSync.textContent = `Last sync: ${new Date(state.lastSync).toLocaleString()}`;
+        elements.lastSync.classList.remove('hidden');
+      }
+      
+      validateForm();
+    }
+
+    // Save configuration
+    function saveConfiguration() {
+      const token = elements.githubToken.value.trim();
+      const url = elements.tokensUrl.value.trim();
+      
+      if (!token || !url) {
+        showStatus('Please fill in all required fields', 'error');
+        return;
+      }
+      
+      setLoading(elements.saveConfig, true);
+      
+      parent.postMessage({
+        pluginMessage: {
+          type: 'SAVE_TOKEN',
+          payload: { key: 'githubToken', value: token }
+        }
+      }, '*');
+      
+      parent.postMessage({
+        pluginMessage: {
+          type: 'SAVE_TOKEN',
+          payload: { key: 'tokensUrl', value: url }
+        }
+      }, '*');
+    }
+
+    // Handle token saved
+    function handleTokenSaved({ key, value }) {
+      pluginState[key] = value;
+      
+      if (key === 'githubToken' || key === 'tokensUrl') {
+        validateForm();
+      }
+      
+      showStatus('Configuration saved successfully', 'success');
+      setLoading(elements.saveConfig, false);
+    }
+
+    // Validate form
+    function validateForm() {
+      const token = elements.githubToken.value.trim();
+      const url = elements.tokensUrl.value.trim();
+      
+      elements.fetchTokens.disabled = !token || !url;
+    }
+
+    // Fetch tokens
+    function fetchTokens() {
+      const url = elements.tokensUrl.value.trim();
+      
+      if (!url) {
+        showStatus('Please enter a valid tokens URL', 'error');
+        return;
+      }
+      
+      setLoading(elements.fetchTokens, true);
+      showStatus('Fetching tokens...', 'info');
+      
+      parent.postMessage({
+        pluginMessage: {
+          type: 'FETCH_TOKENS',
+          payload: url
+        }
+      }, '*');
+    }
+
+    // Handle tokens fetched
+    function handleTokensFetched({ tokens, timestamp }) {
+      currentTokens = tokens;
+      setLoading(elements.fetchTokens, false);
+      
+      // Show token preview
+      showTokenPreview(tokens);
+      showStatus('Tokens fetched successfully', 'success');
+      
+      // Trigger sync to calculate diff
+      parent.postMessage({
+        pluginMessage: {
+          type: 'SYNC_TOKENS',
+          payload: tokens
+        }
+      }, '*');
+    }
+
+    // Show token preview
+    function showTokenPreview(tokens) {
+      const colorCount = Object.keys(tokens.colors).length;
+      const spacingCount = Object.keys(tokens.spacing).length;
+      const typographyCount = Object.keys(tokens.typography).length;
+      
+      elements.tokenSummary.innerHTML = `
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <div style="text-align: center; padding: 12px; background: #f8f9fa; border-radius: 6px;">
+            <div style="font-size: 20px; font-weight: 600; color: #667eea;">${colorCount}</div>
+            <div style="font-size: 12px; color: #718096;">Colors</div>
+          </div>
+          <div style="text-align: center; padding: 12px; background: #f8f9fa; border-radius: 6px;">
+            <div style="font-size: 20px; font-weight: 600; color: #667eea;">${spacingCount}</div>
+            <div style="font-size: 12px; color: #718096;">Spacing</div>
+          </div>
+          <div style="text-align: center; padding: 12px; background: #f8f9fa; border-radius: 6px;">
+            <div style="font-size: 20px; font-weight: 600; color: #667eea;">${typographyCount}</div>
+            <div style="font-size: 12px; color: #718096;">Typography</div>
+          </div>
+        </div>
+      `;
+      
+      elements.tokenPreview.classList.remove('hidden');
+    }
+
+    // Handle diff calculated
+    function handleDiffCalculated(diff) {
+      currentDiff = diff;
+      
+      if (diff.length === 0) {
+        showStatus('No changes detected - tokens are already in sync', 'success');
+        return;
+      }
+      
+      showDiff(diff);
+      elements.diffSection.classList.remove('hidden');
+    }
+
+    // Show diff
+    function showDiff(diff) {
+      elements.diffContainer.innerHTML = diff.map(item => {
+        const typeClass = `diff-${item.type}`;
+        const typeLabel = item.type;
+        
+        let valueDisplay = '';
+        if (item.type === 'added') {
+          valueDisplay = `<div class="diff-name">${item.name}</div>`;
+        } else if (item.type === 'modified') {
+          valueDisplay = `
+            <div class="diff-name">${item.name}</div>
+            <div style="font-size: 11px; margin-top: 4px;">
+              <div>From: ${JSON.stringify(item.oldValue)}</div>
+              <div>To: ${JSON.stringify(item.newValue)}</div>
+            </div>
+          `;
+        } else if (item.type === 'removed') {
+          valueDisplay = `<div class="diff-name">${item.name}</div>`;
+        }
+        
+        return `
+          <div class="diff-item ${typeClass}">
+            <span class="diff-type ${typeClass}">${typeLabel}</span>
+            <span style="color: #718096; font-size: 11px;">${item.collection}</span>
+            ${valueDisplay}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Apply changes
+    function applyChanges() {
+      if (!currentTokens || !currentDiff.length) {
+        showStatus('No changes to apply', 'error');
+        return;
+      }
+      
+      setLoading(elements.applyChanges, true);
+      showStatus('Applying changes...', 'info');
+      
+      parent.postMessage({
+        pluginMessage: {
+          type: 'APPLY_CHANGES',
+          payload: {
+            diff: currentDiff,
+            tokens: currentTokens
+          }
+        }
+      }, '*');
+    }
+
+    // Cancel changes
+    function cancelChanges() {
+      elements.diffSection.classList.add('hidden');
+      currentDiff = [];
+      showStatus('Changes cancelled', 'info');
+    }
+
+    // Handle sync complete
+    function handleSyncComplete(result) {
+      setLoading(elements.applyChanges, false);
+      
+      if (result.success) {
+        showStatus(
+          `Sync completed! ${result.variablesCreated} created, ${result.variablesUpdated} updated`,
+          'success'
+        );
+        elements.diffSection.classList.add('hidden');
+        
+        if (result.errors.length > 0) {
+          showStatus(`Completed with ${result.errors.length} warnings`, 'info');
+        }
+      } else {
+        showStatus(`Sync failed: ${result.errors.join(', ')}`, 'error');
+      }
+    }
+
+    // Handle sync error
+    function handleSyncError(result) {
+      setLoading(elements.applyChanges, false);
+      showStatus(`Sync failed: ${result.errors.join(', ')}`, 'error');
+    }
+
+    // Handle error
+    function handleError(message) {
+      showStatus(message, 'error');
+      setLoading(elements.fetchTokens, false);
+      setLoading(elements.applyChanges, false);
+      setLoading(elements.saveConfig, false);
+    }
+
+    // Show status message
+    function showStatus(message, type) {
+      elements.status.textContent = message;
+      elements.status.className = `status status-${type}`;
+      elements.status.classList.remove('hidden');
+      
+      // Auto-hide success messages after 3 seconds
+      if (type === 'success') {
+        setTimeout(() => {
+          elements.status.classList.add('hidden');
+        }, 3000);
+      }
+    }
+
+    // Set loading state
+    function setLoading(element, loading) {
+      if (loading) {
+        element.disabled = true;
+        element.innerHTML = '<span class="loading"></span>' + element.textContent.replace(/.*\s/, '');
+      } else {
+        element.disabled = false;
+        element.innerHTML = element.textContent.replace(/.*\s/, '').replace(/^\s+/, '');
+      }
+    }
+  </script>
+</body>
+</html>

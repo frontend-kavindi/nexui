@@ -1,0 +1,151 @@
+{
+  "colors": {
+    "primary": {
+      "type": "color",
+      "value": "#667eea",
+      "description": "Primary brand color"
+    },
+    "secondary": {
+      "type": "color",
+      "value": "#764ba2",
+      "description": "Secondary brand color"
+    },
+    "success": {
+      "type": "color",
+      "value": "#48bb78",
+      "description": "Success state color"
+    },
+    "error": {
+      "type": "color",
+      "value": "#f56565",
+      "description": "Error state color"
+    },
+    "warning": {
+      "type": "color",
+      "value": "#ed8936",
+      "description": "Warning state color"
+    },
+    "neutral": {
+      "type": "color",
+      "value": "#718096",
+      "description": "Neutral text color"
+    },
+    "background": {
+      "type": "color",
+      "value": "#ffffff",
+      "description": "Background color"
+    },
+    "surface": {
+      "type": "color",
+      "value": "#f8f9fa",
+      "description": "Surface color"
+    }
+  },
+  "spacing": {
+    "xs": {
+      "type": "spacing",
+      "value": 4,
+      "unit": "px",
+      "description": "Extra small spacing"
+    },
+    "sm": {
+      "type": "spacing",
+      "value": 8,
+      "unit": "px",
+      "description": "Small spacing"
+    },
+    "md": {
+      "type": "spacing",
+      "value": 16,
+      "unit": "px",
+      "description": "Medium spacing"
+    },
+    "lg": {
+      "type": "spacing",
+      "value": 24,
+      "unit": "px",
+      "description": "Large spacing"
+    },
+    "xl": {
+      "type": "spacing",
+      "value": 32,
+      "unit": "px",
+      "description": "Extra large spacing"
+    },
+    "2xl": {
+      "type": "spacing",
+      "value": 48,
+      "unit": "px",
+      "description": "2X large spacing"
+    },
+    "3xl": {
+      "type": "spacing",
+      "value": 64,
+      "unit": "px",
+      "description": "3X large spacing"
+    }
+  },
+  "typography": {
+    "heading1": {
+      "type": "typography",
+      "value": {
+        "fontFamily": "Inter",
+        "fontSize": 32,
+        "fontWeight": 700,
+        "lineHeight": 1.2,
+        "letterSpacing": -0.5
+      },
+      "description": "Heading 1 style"
+    },
+    "heading2": {
+      "type": "typography",
+      "value": {
+        "fontFamily": "Inter",
+        "fontSize": 24,
+        "fontWeight": 600,
+        "lineHeight": 1.3
+      },
+      "description": "Heading 2 style"
+    },
+    "heading3": {
+      "type": "typography",
+      "value": {
+        "fontFamily": "Inter",
+        "fontSize": 20,
+        "fontWeight": 600,
+        "lineHeight": 1.4
+      },
+      "description": "Heading 3 style"
+    },
+    "body1": {
+      "type": "typography",
+      "value": {
+        "fontFamily": "Inter",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "lineHeight": 1.5
+      },
+      "description": "Body text 1"
+    },
+    "body2": {
+      "type": "typography",
+      "value": {
+        "fontFamily": "Inter",
+        "fontSize": 14,
+        "fontWeight": 400,
+        "lineHeight": 1.5
+      },
+      "description": "Body text 2"
+    },
+    "caption": {
+      "type": "typography",
+      "value": {
+        "fontFamily": "Inter",
+        "fontSize": 12,
+        "fontWeight": 400,
+        "lineHeight": 1.4
+      },
+      "description": "Caption text"
+    }
+  }
+}
