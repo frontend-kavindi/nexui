@@ -7,7 +7,14 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  external: ['react', 'react-dom', 'react/jsx-runtime', '@nexui/utils', '@nexui/themes'],
+  external: [
+    'react',
+    'react-dom',
+    'react/jsx-runtime',
+    '@nexui/utils',
+    '@nexui/themes',
+    'focus-trap-react',
+  ],
   esbuildOptions(options) {
     options.jsx = 'automatic';
     return options;

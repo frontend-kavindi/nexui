@@ -220,6 +220,9 @@ function surfaceTextBorderLight() {
       strong: t('#d4d4d8', 'color'),
       focus: t('#2563eb', 'color'),
     },
+    overlay: {
+      scrim: t('rgb(0 0 0 / 0.45)', 'color'),
+    },
   };
 }
 
@@ -246,6 +249,9 @@ function surfaceTextBorderDark() {
       subtle: t('#27272a', 'color'),
       strong: t('#52525b', 'color'),
       focus: t('#60a5fa', 'color'),
+    },
+    overlay: {
+      scrim: t('rgb(0 0 0 / 0.65)', 'color'),
     },
   };
 }
@@ -274,6 +280,9 @@ function surfaceTextBorderHighContrast() {
       subtle: t('#d4d4d4', 'color'),
       strong: t('#ffffff', 'color'),
       focus: t('#ffff00', 'color'),
+    },
+    overlay: {
+      scrim: t('rgb(0 0 0 / 0.85)', 'color'),
     },
   };
 }
@@ -378,6 +387,9 @@ function motion() {
       fast: t('120ms', 'duration'),
       normal: t('200ms', 'duration'),
       slow: t('320ms', 'duration'),
+      toastDismissFast: t('3200ms', 'duration'),
+      toastDismissNormal: t('4800ms', 'duration'),
+      toastDismissSlow: t('6400ms', 'duration'),
     },
     easing: {
       easeIn: t('cubic-bezier(0.4, 0, 1, 1)', 'cubicBezier'),
@@ -396,6 +408,25 @@ function breakpoints() {
     lg: t('64rem', 'dimension'),
     xl: t('80rem', 'dimension'),
     '2xl': t('96rem', 'dimension'),
+  };
+}
+
+function zIndex() {
+  return {
+    base: t('0', 'dimension'),
+    dropdown: t('1000', 'dimension'),
+    sticky: t('1100', 'dimension'),
+    modalBackdrop: t('1200', 'dimension'),
+    modal: t('1300', 'dimension'),
+    toast: t('1400', 'dimension'),
+  };
+}
+
+function opacityTokens() {
+  return {
+    transparent: t('0', 'opacity'),
+    subdued: t('0.6', 'opacity'),
+    full: t('1', 'opacity'),
   };
 }
 
@@ -424,6 +455,8 @@ function buildThemeTokens(p) {
     radius: radius(),
     motion: motion(),
     breakpoint: breakpoints(),
+    zIndex: zIndex(),
+    opacity: opacityTokens(),
   };
 }
 

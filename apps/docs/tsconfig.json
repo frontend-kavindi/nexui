@@ -7,5 +7,5 @@
     "types": ["vite/client"],
     "rootDir": "."
   },
-  "include": [".storybook/**/*.ts", "src/**/*.ts", "src/**/*.tsx", "vitest.config.ts"]
+  "include": [".storybook/**/*.ts", ".storybook/**/*.tsx", "src/**/*.ts", "src/**/*.tsx", "vitest.config.ts"]
 }

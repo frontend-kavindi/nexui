@@ -21,13 +21,15 @@
   },
   "dependencies": {
     "@nexui/themes": "workspace:*",
-    "@nexui/utils": "workspace:*"
+    "@nexui/utils": "workspace:*",
+    "focus-trap-react": "^11.0.4"
   },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "axe-core": "^4.10.3",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^19.0.10",

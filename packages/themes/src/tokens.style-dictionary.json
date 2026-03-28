@@ -274,6 +274,12 @@
               "value": "#2563eb",
               "type": "color"
             }
+          },
+          "overlay": {
+            "scrim": {
+              "value": "rgb(0 0 0 / 0.45)",
+              "type": "color"
+            }
           }
         },
         "typography": {
@@ -531,6 +537,18 @@
             "slow": {
               "value": "320ms",
               "type": "duration"
+            },
+            "toastDismissFast": {
+              "value": "3200ms",
+              "type": "duration"
+            },
+            "toastDismissNormal": {
+              "value": "4800ms",
+              "type": "duration"
+            },
+            "toastDismissSlow": {
+              "value": "6400ms",
+              "type": "duration"
             }
           },
           "easing": {
@@ -576,6 +594,46 @@
           "2xl": {
             "value": "96rem",
             "type": "dimension"
+          }
+        },
+        "zIndex": {
+          "base": {
+            "value": "0",
+            "type": "dimension"
+          },
+          "dropdown": {
+            "value": "1000",
+            "type": "dimension"
+          },
+          "sticky": {
+            "value": "1100",
+            "type": "dimension"
+          },
+          "modalBackdrop": {
+            "value": "1200",
+            "type": "dimension"
+          },
+          "modal": {
+            "value": "1300",
+            "type": "dimension"
+          },
+          "toast": {
+            "value": "1400",
+            "type": "dimension"
+          }
+        },
+        "opacity": {
+          "transparent": {
+            "value": "0",
+            "type": "opacity"
+          },
+          "subdued": {
+            "value": "0.6",
+            "type": "opacity"
+          },
+          "full": {
+            "value": "1",
+            "type": "opacity"
           }
         }
       },
@@ -851,6 +909,12 @@
               "value": "#60a5fa",
               "type": "color"
             }
+          },
+          "overlay": {
+            "scrim": {
+              "value": "rgb(0 0 0 / 0.65)",
+              "type": "color"
+            }
           }
         },
         "typography": {
@@ -1108,6 +1172,18 @@
             "slow": {
               "value": "320ms",
               "type": "duration"
+            },
+            "toastDismissFast": {
+              "value": "3200ms",
+              "type": "duration"
+            },
+            "toastDismissNormal": {
+              "value": "4800ms",
+              "type": "duration"
+            },
+            "toastDismissSlow": {
+              "value": "6400ms",
+              "type": "duration"
             }
           },
           "easing": {
@@ -1153,6 +1229,46 @@
           "2xl": {
             "value": "96rem",
             "type": "dimension"
+          }
+        },
+        "zIndex": {
+          "base": {
+            "value": "0",
+            "type": "dimension"
+          },
+          "dropdown": {
+            "value": "1000",
+            "type": "dimension"
+          },
+          "sticky": {
+            "value": "1100",
+            "type": "dimension"
+          },
+          "modalBackdrop": {
+            "value": "1200",
+            "type": "dimension"
+          },
+          "modal": {
+            "value": "1300",
+            "type": "dimension"
+          },
+          "toast": {
+            "value": "1400",
+            "type": "dimension"
+          }
+        },
+        "opacity": {
+          "transparent": {
+            "value": "0",
+            "type": "opacity"
+          },
+          "subdued": {
+            "value": "0.6",
+            "type": "opacity"
+          },
+          "full": {
+            "value": "1",
+            "type": "opacity"
           }
         }
       },
@@ -1428,6 +1544,12 @@
               "value": "#ffff00",
               "type": "color"
             }
+          },
+          "overlay": {
+            "scrim": {
+              "value": "rgb(0 0 0 / 0.85)",
+              "type": "color"
+            }
           }
         },
         "typography": {
@@ -1685,6 +1807,18 @@
             "slow": {
               "value": "320ms",
               "type": "duration"
+            },
+            "toastDismissFast": {
+              "value": "3200ms",
+              "type": "duration"
+            },
+            "toastDismissNormal": {
+              "value": "4800ms",
+              "type": "duration"
+            },
+            "toastDismissSlow": {
+              "value": "6400ms",
+              "type": "duration"
             }
           },
           "easing": {
@@ -1730,6 +1864,46 @@
           "2xl": {
             "value": "96rem",
             "type": "dimension"
+          }
+        },
+        "zIndex": {
+          "base": {
+            "value": "0",
+            "type": "dimension"
+          },
+          "dropdown": {
+            "value": "1000",
+            "type": "dimension"
+          },
+          "sticky": {
+            "value": "1100",
+            "type": "dimension"
+          },
+          "modalBackdrop": {
+            "value": "1200",
+            "type": "dimension"
+          },
+          "modal": {
+            "value": "1300",
+            "type": "dimension"
+          },
+          "toast": {
+            "value": "1400",
+            "type": "dimension"
+          }
+        },
+        "opacity": {
+          "transparent": {
+            "value": "0",
+            "type": "opacity"
+          },
+          "subdued": {
+            "value": "0.6",
+            "type": "opacity"
+          },
+          "full": {
+            "value": "1",
+            "type": "opacity"
           }
         }
       },
@@ -2005,6 +2179,12 @@
               "value": "#2563eb",
               "type": "color"
             }
+          },
+          "overlay": {
+            "scrim": {
+              "value": "rgb(0 0 0 / 0.45)",
+              "type": "color"
+            }
           }
         },
         "typography": {
@@ -2262,6 +2442,18 @@
             "slow": {
               "value": "320ms",
               "type": "duration"
+            },
+            "toastDismissFast": {
+              "value": "3200ms",
+              "type": "duration"
+            },
+            "toastDismissNormal": {
+              "value": "4800ms",
+              "type": "duration"
+            },
+            "toastDismissSlow": {
+              "value": "6400ms",
+              "type": "duration"
             }
           },
           "easing": {
@@ -2307,6 +2499,46 @@
           "2xl": {
             "value": "96rem",
             "type": "dimension"
+          }
+        },
+        "zIndex": {
+          "base": {
+            "value": "0",
+            "type": "dimension"
+          },
+          "dropdown": {
+            "value": "1000",
+            "type": "dimension"
+          },
+          "sticky": {
+            "value": "1100",
+            "type": "dimension"
+          },
+          "modalBackdrop": {
+            "value": "1200",
+            "type": "dimension"
+          },
+          "modal": {
+            "value": "1300",
+            "type": "dimension"
+          },
+          "toast": {
+            "value": "1400",
+            "type": "dimension"
+          }
+        },
+        "opacity": {
+          "transparent": {
+            "value": "0",
+            "type": "opacity"
+          },
+          "subdued": {
+            "value": "0.6",
+            "type": "opacity"
+          },
+          "full": {
+            "value": "1",
+            "type": "opacity"
           }
         }
       }

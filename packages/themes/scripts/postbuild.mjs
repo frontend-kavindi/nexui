@@ -137,6 +137,29 @@ parts.push(`  gap: var(--nexui-spacing-3);`);
 parts.push(`  margin-inline: 0;`);
 parts.push(`  padding-inline: 0;`);
 parts.push(`}`);
+parts.push(``);
+parts.push(`/* Motion primitives — referenced via animation-name from components */`);
+parts.push(`@keyframes nexui-spin {`);
+parts.push(`  to { transform: rotate(360deg); }`);
+parts.push(`}`);
+parts.push(`@keyframes nexui-modal-enter {`);
+parts.push(
+  `  from { opacity: var(--nexui-opacity-transparent); transform: translate3d(0, var(--nexui-spacing-2), 0); }`,
+);
+parts.push(`  to { opacity: var(--nexui-opacity-full); transform: translate3d(0, 0, 0); }`);
+parts.push(`}`);
+parts.push(`@keyframes nexui-modal-exit {`);
+parts.push(
+  `  from { opacity: var(--nexui-opacity-full); transform: translate3d(0, 0, 0); }`,
+);
+parts.push(
+  `  to { opacity: var(--nexui-opacity-transparent); transform: translate3d(0, var(--nexui-spacing-2), 0); }`,
+);
+parts.push(`}`);
+parts.push(`@keyframes nexui-toast-progress {`);
+parts.push(`  from { transform: scaleX(1); }`);
+parts.push(`  to { transform: scaleX(0); }`);
+parts.push(`}`);
 
 const css = `${parts.join('\n')}\n`;
 stripPhysicalDirections(css);
