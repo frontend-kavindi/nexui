@@ -10,20 +10,21 @@ export class NexuiButton extends LitElement {
 
     button {
       font: inherit;
-      border-radius: var(--nexui-radius-md, 8px);
-      padding: var(--nexui-space-2, 8px) var(--nexui-space-4, 16px);
+      border-radius: var(--nexui-radius-md);
+      padding-block: var(--nexui-spacing-2);
+      padding-inline: var(--nexui-spacing-4);
     }
 
     button[data-variant='primary'] {
-      border: 1px solid var(--nexui-color-brand-primary, #2563eb);
-      background: var(--nexui-color-brand-primary, #2563eb);
-      color: var(--nexui-color-brand-onPrimary, #ffffff);
+      border: 1px solid var(--nexui-color-primary-600);
+      background: var(--nexui-color-primary-600);
+      color: var(--nexui-color-text-on-primary);
     }
 
     button[data-variant='secondary'] {
-      border: 1px solid var(--nexui-color-border-default, #e5e5e5);
-      background: var(--nexui-color-background-canvas, #ffffff);
-      color: var(--nexui-color-foreground-default, #0a0a0a);
+      border: 1px solid var(--nexui-color-border-default);
+      background: var(--nexui-color-surface-canvas);
+      color: var(--nexui-color-text-primary);
     }
 
     button[disabled] {

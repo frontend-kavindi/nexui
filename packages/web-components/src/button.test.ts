@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { NexuiButton, registerNexuiButton } from './nexui-button';
+import type { NexuiButton } from './nexui-button';
+import { registerNexuiButton } from './nexui-button';
 
 registerNexuiButton();
 

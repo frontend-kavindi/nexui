@@ -14,20 +14,21 @@ const props = withDefaults(
 const buttonClass = computed(() => classNames('nexui-button', props.rootClass));
 
 const buttonStyle = computed(() => ({
-  borderRadius: 'var(--nexui-radius-md, 8px)',
-  padding: 'var(--nexui-space-2, 8px) var(--nexui-space-4, 16px)',
+  borderRadius: 'var(--nexui-radius-md)',
+  paddingBlock: 'var(--nexui-spacing-2)',
+  paddingInline: 'var(--nexui-spacing-4)',
   border:
     props.variant === 'primary'
-      ? '1px solid var(--nexui-color-brand-primary, #2563eb)'
-      : '1px solid var(--nexui-color-border-default, #e5e5e5)',
+      ? '1px solid var(--nexui-color-primary-600)'
+      : '1px solid var(--nexui-color-border-default)',
   background:
     props.variant === 'primary'
-      ? 'var(--nexui-color-brand-primary, #2563eb)'
-      : 'var(--nexui-color-background-canvas, #ffffff)',
+      ? 'var(--nexui-color-primary-600)'
+      : 'var(--nexui-color-surface-canvas)',
   color:
     props.variant === 'primary'
-      ? 'var(--nexui-color-brand-onPrimary, #ffffff)'
-      : 'var(--nexui-color-foreground-default, #0a0a0a)',
+      ? 'var(--nexui-color-text-on-primary)'
+      : 'var(--nexui-color-text-primary)',
   cursor: props.disabled ? 'not-allowed' : 'pointer',
 }));
 </script>
