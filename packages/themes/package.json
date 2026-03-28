@@ -4,7 +4,10 @@
   "private": false,
   "type": "module",
   "sideEffects": ["./dist/nexui-variables.css"],
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -15,6 +18,9 @@
     "./css": "./dist/nexui-variables.css",
     "./variables.css": "./dist/nexui-variables.css",
     "./tokens.json": "./dist/tokens.style-dictionary.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "prebuild": "node ./scripts/prebuild.mjs",
