@@ -6,21 +6,32 @@ on:
 
 env:
   NODE_VERSION: '20.x'
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    
+    permissions:
+      contents: write
+      pull-requests: write
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.15.4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,16 +40,10 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9.15.4
-
       - name: Get pnpm store directory
         id: pnpm-store
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
         uses: actions/cache@v4
@@ -72,27 +77,20 @@ jobs:
           title: 'chore: release packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ env.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Deploy Storybook to GitHub Pages
-        if: steps.changesets.outputs.published == 'true'
-        run: |
-          cd apps/docs
-          pnpm build-storybook --output-dir ../../storybook-static
-          
+      - name: Build Storybook
+        run: pnpm --filter docs build-storybook --output-dir ../../storybook-static
+
       - name: Setup GitHub Pages
-        if: steps.changesets.outputs.published == 'true'
         uses: actions/configure-pages@v4
 
-      - name: Upload to GitHub Pages
-        if: steps.changesets.outputs.published == 'true'
+      - name: Upload Storybook to Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./storybook-static
 
       - name: Deploy to GitHub Pages
-        if: steps.changesets.outputs.published == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
 
@@ -102,43 +100,13 @@ jobs:
         with:
           script: |
             const { execSync } = require('child_process');
-            
-            // Get the latest tag
             const tag = execSync('git describe --tags --abbrev=0').toString().trim();
-            
-            // Get the changelog from changesets
-            let changelog = '';
-            try {
-              changelog = execSync('pnpm changeset status --verbose').toString();
-            } catch (error) {
-              changelog = 'See package.json for version changes';
-            }
-            
-            // Create release
             await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: tag,
               name: tag,
-              body: changelog,
+              body: 'See CHANGELOG.md for details.',
               draft: false,
               prerelease: false,
             });
-
-  # GitHub Pages deployment job
-  deploy:
-    name: Deploy Storybook
-    needs: release
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4

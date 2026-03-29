@@ -1,6 +1,8 @@
-name: CI
+name: Visual Regression
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
@@ -8,13 +10,15 @@ env:
   NODE_VERSION: '20.x'
 
 jobs:
-  ci:
-    name: CI
+  chromatic:
+    name: Chromatic Visual Tests
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
@@ -43,14 +47,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
-
-      - name: Build
+      - name: Build packages
         run: pnpm build
 
-      - name: Test
-        run: pnpm test
-
-      - name: Bundle size check
-        run: pnpm size-check
+      - name: Run Chromatic
+        uses: chromaui/action@v11
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: apps/docs
+          buildScriptName: build-storybook
+          exitZeroOnChanges: true
+          onlyChanged: true
