@@ -70,9 +70,9 @@ jobs:
 
       - name: Create Release Pull Request or Publish
         id: changesets
-        uses: changesets/action@v1
+        continue-on-error: true`n        uses: changesets/action@v1
         with:
-          publish: pnpm release || true
+          publish: pnpm release
           commit: 'chore: release packages'
           title: 'chore: release packages'
         env:
