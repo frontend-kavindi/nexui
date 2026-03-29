@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@nexui/core": "workspace:*",
-    "@nexui/web-components": "workspace:*",
     "@nexui/themes": "workspace:*",
+    "@nexui/web-components": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -24,6 +24,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "chromatic": "^16.0.0",
     "eslint": "^9.21.0",
     "storybook": "^8.6.4",
     "typescript": "^5.7.3",
