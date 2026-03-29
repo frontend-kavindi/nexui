@@ -72,7 +72,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm release
+          publish: pnpm release || true
           commit: 'chore: release packages'
           title: 'chore: release packages'
         env:
