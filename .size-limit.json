@@ -1,12 +1,12 @@
 [
   {
     "name": "Button",
-    "path": "test-button-size.js",
+    "path": "packages/core/dist/index.js",
     "limit": "30 kB"
   },
   {
     "name": "DataGrid",
-    "path": "test-datagrid-size.js",
+    "path": "packages/vue/dist/index.js",
     "limit": "30 kB"
   }
 ]
