@@ -80,7 +80,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build Storybook
-        run: pnpm --filter docs build-storybook --output-dir ../../storybook-static
+        run: pnpm --filter @nexui/storybook-docs build --output-dir ../../storybook-static
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
